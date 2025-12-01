@@ -1,4 +1,4 @@
-import { formatDate, formatPrice } from "./utils";
+import { formatDate, formatPrice } from "./utils.js";
 
 const tableBody = document.querySelector('#productsTable tbody');
 const reloadBtn = document.getElementById('reloadBtn');

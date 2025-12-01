@@ -44,3 +44,29 @@ app.use("/api", apiRouter);
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
+//Manejo de errores
+app.use((err, req, res, next) => {
+  console.error("Error global:", err);
+  res.status(500).json({
+    success: false,
+    error: "Error interno del servidor",
+    details: process.env.NODE_ENV === "development" ? err.message : undefined,
+  });
+});
+
+const server = app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+});
+
+const shutdown = async () => {
+  console.log("\n🔴 Recibida señal de apagado...");
+  await closePool();
+  server.close(() => {
+    console.log("🔴 Servidor y conexiones cerradas");
+    process.exit(0);
+  });
+};
+
+process.on("SIGTERM", shutdown);
+process.on("SIGINT", shutdown);

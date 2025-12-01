@@ -1,12 +1,16 @@
+import dotenv from "dotenv";
 import { createPool } from "mysql2/promise";
+
+// Cargar las variables de entorno desde el archivo .env
+dotenv.config();
 
 // Configuración con valores por defecto
 const poolConfig = {
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || null,
-  database: process.env.DB_NAME || "bd-Rider",
-  port: parseInt(process.env.DB_PORT) || 3306,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: parseInt(process.env.DB_PORT),
   waitForConnections: true,
   timezone: "local",
   charset: "utf8mb4",
@@ -17,7 +21,6 @@ const poolConfig = {
   enableKeepAlive: true, // Evitar timeouts
   keepAliveInitialDelay: 10000, // 10 segundos
 };
-
 
 console.log("Configuración de MySQL:", poolConfig);
 
